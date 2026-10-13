@@ -12,6 +12,13 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Pranav Sharma | AI/ML &amp; Full-Stack Developer">
 <meta name="twitter:description" content="ML models and full-stack apps, from training to a live deployment.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Pranav">
 <title>Pranav Sharma | AI/ML &amp; Full-Stack Developer</title>
 <meta name="description" content="Pranav Sharma: AI/ML and full-stack developer, final-year CS student at Thapar Institute.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -87,12 +94,26 @@ svg.i{width:20px;height:20px;flex:none}
 /* neural-net lens */
 .lens-wrap{display:flex;justify-content:center;align-items:center}
 .lens{position:relative;width:min(100%,410px);aspect-ratio:1;max-width:100%}
-.lens::before{content:"";position:absolute;inset:-14px;border-radius:50%;background:conic-gradient(from 0deg,transparent 0 20%,var(--accent) 35%,transparent 50% 70%,var(--accent-2) 85%,transparent);-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 2px));mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 2px));animation:spin 9s linear infinite}
+.lens-ring{position:absolute;inset:-30px;width:calc(100% + 60px);height:calc(100% + 60px);max-width:none;pointer-events:none;overflow:visible}
+@media (max-width:820px){ .lens-ring{inset:-24px;width:calc(100% + 48px);height:calc(100% + 48px)} }
 @keyframes spin{to{transform:rotate(360deg)}}
 .lens .disc{position:absolute;inset:0;border-radius:50%;overflow:hidden;border:3px solid var(--accent);box-shadow:0 0 40px rgba(46,229,157,.45),0 0 100px rgba(46,229,157,.18),inset 0 0 50px rgba(46,229,157,.15);background:radial-gradient(circle at 50% 45%,#0f1d18,#060a09 75%)}
 #nn{position:absolute;inset:0;width:100%;height:100%;display:block}
-.lens .hud{position:absolute;left:50%;bottom:10%;transform:translateX(-50%);font-family:var(--f-mono);font-size:clamp(10px,1.3vw,12.5px);color:var(--accent);background:rgba(5,8,7,.8);border:1px solid var(--accent-line);border-radius:999px;padding:5px 12px;white-space:nowrap}
-.lens .hud b{color:var(--fg);font-weight:500}
+[hidden]{display:none!important}
+#nn{cursor:grab;touch-action:pan-y}
+#nn.grabbing{cursor:grabbing}
+#nn.pointing{cursor:pointer}
+.skill-card{position:absolute;left:50%;bottom:7%;transform:translateX(-50%);width:min(74%,300px);text-align:center;pointer-events:none}
+.sc-hint{display:inline-block;font-family:var(--f-mono);font-size:clamp(10px,1.3vw,12px);color:var(--accent);background:rgba(5,8,7,.8);border:1px solid var(--accent-line);border-radius:999px;padding:5px 12px;white-space:nowrap}
+.sc-body{pointer-events:auto;background:rgba(6,14,11,.94);border:1px solid var(--accent);border-radius:14px;padding:10px 12px 11px;text-align:left;box-shadow:0 0 24px rgba(46,229,157,.25);animation:pop .25s ease-out}
+@keyframes pop{from{transform:translateY(6px) scale(.97);opacity:.4}to{transform:none;opacity:1}}
+.sc-top{display:flex;align-items:center;gap:8px}
+.sc-top strong{font-family:var(--f-display);font-size:clamp(14px,1.7vw,16px);color:var(--fg)}
+.sc-cat{font-size:11px;font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:2px 8px;white-space:nowrap}
+.sc-x{margin-left:auto;flex:none;width:24px;height:24px;border-radius:50%;border:1px solid var(--line-2);background:none;color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center}
+.sc-x:hover{color:var(--fg);border-color:var(--fg)}
+.sc-x svg{width:12px;height:12px}
+.sc-body p{color:#c3cfc9;font-size:clamp(12px,1.4vw,13.5px);line-height:1.45;margin-top:5px}
 
 .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;padding-bottom:clamp(40px,6vw,64px);position:relative}
 .stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
@@ -289,7 +310,7 @@ footer p{color:var(--muted);font-size:14.5px}
 <body>
 <nav class="nav" id="nav" aria-label="Main">
   <div class="wrap">
-    <a href="#home" class="logo">Pranav<span>.</span></a>
+    <a href="#home" class="logo" aria-label="Pranav Sharma, home">PS<span>.</span></a>
     <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="links">
       <svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
     </button>
@@ -328,8 +349,14 @@ footer p{color:var(--muted);font-size:14.5px}
       <div class="lens-wrap">
         <!-- Want your photo later? Replace the <canvas> below with: <img src="photo.jpg" alt="Pranav Sharma" style="width:100%;height:100%;object-fit:cover"> -->
         <div class="lens">
-          <div class="disc"><canvas id="nn" aria-hidden="true"></canvas></div>
-          <span class="hud">model.fit() <b>→</b> deploy()</span>
+          <svg class="lens-ring" viewBox="0 0 500 500" aria-hidden="true" id="lensRing"><circle cx="250" cy="250" r="236" fill="none" stroke="#2ee59d" stroke-opacity=".22" stroke-width="1.4"/><path id="flowPath" d="M250,14 a236,236 0 1,1 0,472 a236,236 0 1,1 0,-472" fill="none"/><g class="packet"><circle r="7" fill="#2ee59d" opacity=".22"/><circle r="3" fill="#8affc9"/><animateMotion dur="14s" repeatCount="indefinite" begin="0s"><mpath href="#flowPath"/></animateMotion></g><g class="packet"><circle r="7" fill="#2ee59d" opacity=".22"/><circle r="3" fill="#8affc9"/><animateMotion dur="14s" repeatCount="indefinite" begin="-7s"><mpath href="#flowPath"/></animateMotion></g><g transform="translate(250 14)"><circle r="21" fill="#07110d" stroke="#2ee59d" stroke-opacity=".7" stroke-width="1.4"/><g transform="translate(-10.2 -10.2) scale(.85)" fill="none" stroke="#5ff5b4" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5.5" rx="7" ry="2.8"/><path d="M5 5.5v13c0 1.5 3.1 2.8 7 2.8s7-1.3 7-2.8v-13M5 12c0 1.5 3.1 2.8 7 2.8s7-1.3 7-2.8"/></g></g><g transform="translate(486 250)"><circle r="21" fill="#07110d" stroke="#2ee59d" stroke-opacity=".7" stroke-width="1.4"/><g transform="translate(-10.2 -10.2) scale(.85)" fill="none" stroke="#5ff5b4" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l6 6M6 18l6-6M12 12l6-6M12 12l6 6"/><circle cx="5" cy="5.5" r="2.2"/><circle cx="5" cy="18.5" r="2.2"/><circle cx="12" cy="12" r="2.4"/><circle cx="19" cy="5.5" r="2.2"/><circle cx="19" cy="18.5" r="2.2"/></g></g><g transform="translate(250 486)"><circle r="21" fill="#07110d" stroke="#2ee59d" stroke-opacity=".7" stroke-width="1.4"/><g transform="translate(-10.2 -10.2) scale(.85)" fill="none" stroke="#5ff5b4" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4" width="17" height="6.5" rx="1.6"/><rect x="3.5" y="13.5" width="17" height="6.5" rx="1.6"/><path d="M7.5 7.2h.01M7.5 16.8h.01"/></g></g><g transform="translate(14 250)"><circle r="21" fill="#07110d" stroke="#2ee59d" stroke-opacity=".7" stroke-width="1.4"/><g transform="translate(-10.2 -10.2) scale(.85)" fill="none" stroke="#5ff5b4" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m8 7-5 5 5 5M16 7l5 5-5 5M13.5 4.5l-3 15"/></g></g></svg>
+          <div class="disc"><canvas id="nn" role="img" aria-label="Interactive globe of my skills. Drag to rotate, tap a skill to see where I used it."></canvas></div>
+          <div class="skill-card" id="skillCard" aria-live="polite">
+            <div class="sc-body" id="scBody" hidden>
+              <div class="sc-top"><strong id="scName"></strong><span class="sc-cat" id="scCat"></span><button type="button" class="sc-x" id="scClose" aria-label="Close skill details"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
+              <p id="scUse"></p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -556,6 +583,7 @@ footer p{color:var(--muted);font-size:14.5px}
 (function(){
   var yr=document.getElementById('yr'); if(yr) yr.textContent=new Date().getFullYear();
   var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var lr=document.getElementById('lensRing'); if(reduce&&lr&&lr.pauseAnimations) lr.pauseAnimations();
 
   // nav
   var nav=document.getElementById('nav'), btn=document.getElementById('menuBtn'), links=document.getElementById('links');
@@ -626,62 +654,112 @@ footer p{color:var(--muted);font-size:14.5px}
     },2200);
   }
 
-  // neural network in the lens
+  // interactive skill globe
   var cv=document.getElementById('nn'); if(!cv||!cv.getContext) return;
-  var ctx=cv.getContext('2d'), W=0,H=0,dpr=1,nodes=[],edges=[],pulses=[],raf=null,visible=true,t=0;
-  var LAYERS=[4,6,6,5,2];
+  var ctx=cv.getContext('2d'), W=0,H=0,dpr=1,raf=null,visible=true,t=0;
+  var SK=[
+    ['Python','Language','My main language. Used in every ML project and in the FastAPI and Flask backends.'],
+    ['TensorFlow','Deep learning','Transfer learning with MobileNetV2, a DCGAN from scratch, and a CNN scene classifier.'],
+    ['scikit-learn','Machine learning','Model training and evaluation in RockGuard, the Titanic study, and tweet sentiment.'],
+    ['XGBoost','Machine learning','Part of RockGuard’s risk-prediction ensemble (Innovation Award).'],
+    ['Random Forest','Machine learning','RockGuard’s ensemble, plus the handwriting-recognition model comparison.'],
+    ['Naive Bayes','Machine learning','RockGuard’s ensemble, and the airline-tweet sentiment classifier.'],
+    ['Fuzzy AHP','Decision model','Blended with the ML score in RockGuard to give clear Low-to-Critical risk levels.'],
+    ['NLP','AI','Airline-tweet sentiment analysis with TF-IDF features.'],
+    ['Hugging Face','LLMs','A summarize-and-ask app built on FLAN-T5 and DistilBERT.'],
+    ['YOLOv8','Deep learning','Fine-tuned for Cellscope to 0.87 mAP50 on blood-cell detection.'],
+    ['Pandas','Data','Data cleaning and feature engineering across my ML projects.'],
+    ['FastAPI','Backend','The real-time prediction API for RockGuard and the inference API for Cellscope.'],
+    ['Flask','Backend','PictoSpeak AI: multi-user app with email-OTP signup and per-user history.'],
+    ['Next.js','Full stack','Sustainable Harvest Solutions, a full-stack farming app with an English/Hindi UI.'],
+    ['TypeScript','Language','Typed frontend and API code in the SHS farming app.'],
+    ['PostgreSQL','Database','SHS schema with functions, procedures, cursors, and triggers.'],
+    ['Docker','DevOps','Containerized PictoSpeak AI for deployment on Render.'],
+    ['Vercel','Deployment','Hosts Cellscope, SHS, and this portfolio.'],
+    ['AWS','Cloud','EC2, S3, and IAM fundamentals (AWS Solutions Architecture simulation).'],
+    ['SQL','Database','Queries, joins, and stored logic in PostgreSQL and SQLite.']
+  ];
+  var tags=[], mesh=[], M=[1,0,0,0,1,0,0,0,1], vx=0.004, vy=0.0025, sel=-1, hover=-1, boxes=[], drag=null, moved=0;
+  function mul(a,b){ var r=[]; for(var i=0;i<3;i++) for(var j=0;j<3;j++) r[i*3+j]=a[i*3]*b[j]+a[i*3+1]*b[3+j]+a[i*3+2]*b[6+j]; return r; }
+  function rot(ax,ay){ var cx=Math.cos(ax),sx=Math.sin(ax),cy=Math.cos(ay),sy=Math.sin(ay);
+    var RX=[1,0,0,0,cx,-sx,0,sx,cx], RY=[cy,0,sy,0,1,0,-sy,0,cy]; M=mul(mul(RY,RX),M); }
+  function fib(n,i){ var y=1-(i+.5)/n*2, r=Math.sqrt(1-y*y), th=i*Math.PI*(3-Math.sqrt(5)); return [Math.cos(th)*r,y,Math.sin(th)*r]; }
   function setup(){
     var r=cv.getBoundingClientRect(); dpr=Math.min(window.devicePixelRatio||1,2); W=r.width; H=r.height;
     cv.width=W*dpr; cv.height=H*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
-    nodes=[]; edges=[];
-    var x0=W*.2, x1=W*.8;
-    LAYERS.forEach(function(n,li){
-      var x=x0+(x1-x0)*li/(LAYERS.length-1), span=H*(n>4?.52:.38);
-      for(var i=0;i<n;i++){ nodes.push({l:li,x:x,y:H*.46-span/2+(n===1?span/2:span*i/(n-1)),a:0}); }
-    });
-    nodes.forEach(function(a,i){ nodes.forEach(function(b,j){ if(b.l===a.l+1) edges.push({a:i,b:j,w:Math.random()}); }); });
-    pulses=[]; for(var k=0;k<14;k++) spawn(Math.random());
+    tags=SK.map(function(s,i){ return fib(SK.length,i); });
+    mesh=[]; var n=W<320?90:140; for(var i=0;i<n;i++) mesh.push(fib(n,i));
     draw();
   }
-  function spawn(p){
-    var starts=edges.filter(function(e){ return nodes[e.a].l===0; });
-    var e=starts[Math.floor(Math.random()*starts.length)];
-    pulses.push({e:edges.indexOf(e),p:p||0,s:.012+Math.random()*.01});
-  }
+  function tp(p){ return [M[0]*p[0]+M[1]*p[1]+M[2]*p[2], M[3]*p[0]+M[4]*p[1]+M[5]*p[2], M[6]*p[0]+M[7]*p[1]+M[8]*p[2]]; }
   function draw(){
     ctx.clearRect(0,0,W,H);
-    edges.forEach(function(e){
-      var a=nodes[e.a],b=nodes[e.b];
-      ctx.strokeStyle='rgba(46,229,157,'+(0.05+e.w*0.12)+')'; ctx.lineWidth=1;
-      ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
-    });
-    pulses.forEach(function(p){
-      var e=edges[p.e],a=nodes[e.a],b=nodes[e.b];
-      var x=a.x+(b.x-a.x)*p.p, y=a.y+(b.y-a.y)*p.p;
-      ctx.strokeStyle='rgba(95,245,180,.55)'; ctx.lineWidth=1.6;
-      ctx.beginPath(); ctx.moveTo(a.x+(b.x-a.x)*Math.max(0,p.p-.25),a.y+(b.y-a.y)*Math.max(0,p.p-.25)); ctx.lineTo(x,y); ctx.stroke();
-      ctx.fillStyle='#8affc9'; ctx.beginPath(); ctx.arc(x,y,2.2,0,Math.PI*2); ctx.fill();
-    });
-    var r=Math.max(4,W/62);
-    nodes.forEach(function(n){
-      var glow=n.a;
-      ctx.beginPath(); ctx.arc(n.x,n.y,r+glow*4,0,Math.PI*2); ctx.fillStyle='rgba(46,229,157,'+(0.08+glow*.25)+')'; ctx.fill();
-      ctx.beginPath(); ctx.arc(n.x,n.y,r,0,Math.PI*2); ctx.fillStyle=glow>.05?'rgb('+Math.round(20+40*glow)+','+Math.round(60+180*glow)+','+Math.round(45+110*glow)+')':'#0d1a15'; ctx.fill();
-      ctx.lineWidth=1.5; ctx.strokeStyle='rgba(46,229,157,'+(0.5+glow*.5)+')'; ctx.stroke();
+    var cx=W/2, cy=H*0.41, R=W*0.285, i;
+    var gl=ctx.createRadialGradient(cx,cy,0,cx,cy,R*1.3);
+    gl.addColorStop(0,'rgba(46,229,157,.16)'); gl.addColorStop(.6,'rgba(46,229,157,.05)'); gl.addColorStop(1,'rgba(46,229,157,0)');
+    ctx.fillStyle=gl; ctx.beginPath(); ctx.arc(cx,cy,R*1.3,0,6.283); ctx.fill();
+    // inner mesh
+    var mp=mesh.map(function(p){ var q=tp(p); var f=2.8/(2.8+q[2]); return [cx+q[0]*R*.86*f, cy+q[1]*R*.86*f, q[2]]; });
+    ctx.lineWidth=.7;
+    for(i=0;i<mp.length;i++){ for(var j=i+1;j<mp.length;j++){ var dx=mesh[i][0]-mesh[j][0],dy=mesh[i][1]-mesh[j][1],dz=mesh[i][2]-mesh[j][2];
+      if(dx*dx+dy*dy+dz*dz<(W<320?.11:.075)){ var d=(mp[i][2]+mp[j][2]+2)/4; ctx.strokeStyle='rgba(46,229,157,'+(0.03+0.16*(1-d))+')'; ctx.beginPath(); ctx.moveTo(mp[i][0],mp[i][1]); ctx.lineTo(mp[j][0],mp[j][1]); ctx.stroke(); } } }
+    for(i=0;i<mp.length;i++){ var dd=(mp[i][2]+1)/2; ctx.fillStyle='rgba(95,245,180,'+(0.15+0.5*(1-dd))+')'; ctx.beginPath(); ctx.arc(mp[i][0],mp[i][1],(1.5-dd)*(W/400)+.3,0,6.283); ctx.fill(); }
+    // skill tags, back to front
+    var order=tags.map(function(p,k){ var q=tp(p); return {k:k,q:q}; }).sort(function(a,b){ return b.q[2]-a.q[2]; });
+    boxes=[];
+    var base=Math.max(10,W/27);
+    order.forEach(function(o){
+      var q=o.q, f=2.8/(2.8+q[2]), x=cx+q[0]*R*f, y=cy+q[1]*R*f, front=(1-q[2])/2;
+      var isSel=o.k===sel, isHov=o.k===hover;
+      var fs=base*(0.62+0.5*front)*(isSel?1.12:1);
+      ctx.font=(front>.55?'700 ':'600 ')+fs.toFixed(1)+'px "JetBrains Mono", ui-monospace, monospace';
+      var label=SK[o.k][0], w=ctx.measureText(label).width, h=fs*1.75, pw=w+fs*1.1;
+      if(isSel||isHov||front>.72){
+        ctx.beginPath(); if(ctx.roundRect) ctx.roundRect(x-pw/2,y-h/2,pw,h,h/2); else ctx.rect(x-pw/2,y-h/2,pw,h);
+        ctx.fillStyle=isSel?'rgba(46,229,157,.95)':'rgba(8,20,15,'+(0.55+0.4*front)+')'; ctx.fill();
+        ctx.lineWidth=1.2; ctx.strokeStyle='rgba(46,229,157,'+(isSel||isHov?1:0.25+0.5*front)+')'; ctx.stroke();
+        if(isSel){ ctx.shadowColor='rgba(46,229,157,.8)'; ctx.shadowBlur=14; ctx.stroke(); ctx.shadowBlur=0; }
+      }
+      ctx.textAlign='center'; ctx.textBaseline='middle';
+      ctx.fillStyle=isSel?'#04120c':(isHov?'#ffffff':'rgba('+Math.round(150+105*front)+','+Math.round(200+55*front)+','+Math.round(180+60*front)+','+(0.25+0.75*front)+')');
+      ctx.fillText(label,x,y+1);
+      if(front>.35) boxes.push({k:o.k,x:x-pw/2,y:y-h/2,w:pw,h:h});
     });
   }
+  function hit(px,py){ for(var i=boxes.length-1;i>=0;i--){ var b=boxes[i]; if(px>=b.x&&px<=b.x+b.w&&py>=b.y&&py<=b.y+b.h) return b.k; } return -1; }
+  var card={body:document.getElementById('scBody'),name:document.getElementById('scName'),cat:document.getElementById('scCat'),use:document.getElementById('scUse')};
+  function select(k){
+    sel=k;
+    if(k<0){ card.body.hidden=true; }
+    else { card.name.textContent=SK[k][0]; card.cat.textContent=SK[k][1]; card.use.textContent=SK[k][2]; card.body.hidden=false; }
+    if(!raf) draw();
+  }
+  document.getElementById('scClose').addEventListener('click',function(){ select(-1); });
+  function pos(e){ var r=cv.getBoundingClientRect(); return [e.clientX-r.left,e.clientY-r.top]; }
+  cv.addEventListener('pointerdown',function(e){ var p=pos(e); drag={x:p[0],y:p[1],t:Date.now()}; moved=0; cv.classList.add('grabbing'); });
+  cv.addEventListener('pointermove',function(e){
+    var p=pos(e);
+    if(drag){ var dx=p[0]-drag.x, dy=p[1]-drag.y; moved+=Math.abs(dx)+Math.abs(dy);
+      rot(dy*0.008,-dx*0.008); vx=dy*0.0012; vy=-dx*0.0012; drag.x=p[0]; drag.y=p[1]; if(!raf) draw(); return; }
+    if(e.pointerType==='mouse'){
+      var nx=(p[0]/W-.5)*2, ny=(p[1]/H-.5)*2;
+      vy=-nx*0.012; vx=ny*0.012;
+      var h=hit(p[0],p[1]); if(h!==hover){ hover=h; cv.classList.toggle('pointing',h>=0); if(!raf) draw(); }
+    }
+  });
+  function endDrag(e){
+    if(!drag) return; cv.classList.remove('grabbing');
+    if(moved<8){ var p=pos(e), h=hit(p[0],p[1]); select(h===sel?-1:h); }
+    drag=null;
+  }
+  cv.addEventListener('pointerup',endDrag);
+  cv.addEventListener('pointercancel',function(){ drag=null; cv.classList.remove('grabbing'); });
+  cv.addEventListener('pointerleave',function(){ hover=-1; cv.classList.remove('pointing'); drag=null; cv.classList.remove('grabbing'); });
   function tick(){
     t++;
-    nodes.forEach(function(n){ n.a*=0.94; });
-    for(var i=pulses.length-1;i>=0;i--){
-      var p=pulses[i]; p.p+=p.s;
-      if(p.p>=1){
-        var e=edges[p.e], to=e.b; nodes[to].a=1;
-        var next=edges.filter(function(x){ return x.a===to; });
-        if(next.length){ var nx=next[Math.floor(Math.random()*next.length)]; p.e=edges.indexOf(nx); p.p=0; }
-        else { pulses.splice(i,1); spawn(); }
-      }
-    }
+    var idleX=0.0016, idleY=0.0032, damp=sel>=0?0.25:1;
+    if(!drag){ vx+=(idleX-vx)*0.02; vy+=(idleY-vy)*0.02; }
+    rot(vx*damp,vy*damp);
     draw(); raf=requestAnimationFrame(tick);
   }
   function start(){ if(!reduce&&!raf&&visible&&!document.hidden) raf=requestAnimationFrame(tick); }
@@ -689,8 +767,11 @@ footer p{color:var(--muted);font-size:14.5px}
   if('IntersectionObserver' in window){ new IntersectionObserver(function(e){ visible=e[0].isIntersecting; visible?start():stop(); }).observe(cv); }
   document.addEventListener('visibilitychange',function(){ document.hidden?stop():start(); });
   var rt; window.addEventListener('resize',function(){ clearTimeout(rt); rt=setTimeout(setup,150); });
-  setup(); nodes.forEach(function(n){ if(Math.random()<.35) n.a=.7; }); draw(); start();
+  rot(-0.25,0.5); setup(); start();
 })();
+</script>
+<script>
+if ('serviceWorker' in navigator) { window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); }); }
 </script>
 </body>
 </html>

@@ -1,0 +1,16 @@
+{
+  "name": "Pranav Sharma | AI/ML & Full-Stack Developer",
+  "short_name": "Pranav",
+  "description": "Portfolio of Pranav Sharma: ML models and the full-stack apps around them.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#050807",
+  "theme_color": "#050807",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
